@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>b9dis's portfolio</title>
+    <link rel="icon" href="pfp.png" type="image/png" style="border-radius:100%;">
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Particles -->
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+  <style>
+    /* ===== Global Styles ===== */
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #020617;
+      color: #e5e7eb;
+      overflow-x: hidden;
+    }
+
+    #particles-js { position: fixed; inset: 0; z-index: -1; }
+
+    .gradient-text { background: linear-gradient(120deg,#6366f1,#ec4899,#22d3ee); -webkit-background-clip: text; color: transparent; }
+
+    .glass { background: rgba(255,255,255,.06); backdrop-filter: blur(20px); border:1px solid rgba(255,255,255,.1); }
+
+    .float { animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
+
+    .reveal { opacity:0; transform:translateY(60px) scale(.95); transition:1.2s cubic-bezier(.19,1,.22,1); }
+    .reveal.active { opacity:1; transform:none; }
+
+    .tilt { transition: transform .6s cubic-bezier(.16,1,.3,1), box-shadow .6s; }
+    .tilt:hover { transform: scale(1.08) rotateX(6deg) rotateY(-6deg); box-shadow:0 40px 80px rgba(0,0,0,.35); }
+
+    .typing::after { content:'|'; animation: blink 1s infinite; }
+    @keyframes blink { 50% { opacity:0; } }
+
+    .wave span { display:inline-block; animation: wave 2s infinite; }
+    .wave span:nth-child(n) { animation-delay: calc(.05s * var(--i)); }
+    @keyframes wave { 0%,100% { transform:translateY(0);} 50% {transform:translateY(-12px);} }
+
+    .scroll-indicator { animation: bounce 2s infinite; }
+    @keyframes bounce { 50% { transform:translateY(10px);} }
+
+    /* Gallery animations */
+    #gallery { transition: opacity .6s ease, transform .6s cubic-bezier(.19,1,.22,1); }
+    #gallery.show { opacity:1; transform:translateY(0); }
+    #gallery.hide { opacity:0; transform:translateY(80px); }
+    .gallery-item { opacity:0; transform:translateY(40px) scale(.95); animation: galleryIn .8s cubic-bezier(.19,1,.22,1) forwards; }
+    @keyframes galleryIn { to { opacity:1; transform:none; } }
+    @keyframes galleryOut { to { opacity:0; transform:translateY(-40px) scale(.9); } }
+
+    #prev, #next { transition: transform .4s cubic-bezier(.16,1,.3,1), background .4s; }
+    #prev:hover, #next:hover { transform: scale(1.25); background: rgba(255,255,255,.25); }
+
+
+    /* ===== Languages Section ===== */
+
+.language-card {
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.08);
+  transform: translateY(40px);
+  opacity: 0;
+  transition: all .8s cubic-bezier(.19,1,.22,1);
+}
+
+.language-card.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.language-card:hover {
+  transform: scale(1.07) rotateX(5deg) rotateY(-5deg);
+  box-shadow: 0 40px 80px rgba(0,0,0,.4);
+}
+
+.progress-bar {
+  width: 0;
+  transition: width 1.8s cubic-bezier(.19,1,.22,1);
+}
+
+@keyframes rainbowMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.rainbow-text {
+  background: linear-gradient(
+    90deg,
+    red,
+    orange,
+    yellow,
+    green,
+    cyan,
+    blue,
+    violet,
+    red
+  );
+  background-size: 200% auto;
+  animation: rainbowMove 3s linear infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+    /* Globe 3D réaliste */
+    .globe {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: url("https://upload.wikimedia.org/wikipedia/commons/8/80/Equirectangular_projection_SW.jpg") no-repeat center/cover;
+      box-shadow: inset -15px -10px 30px rgba(0,0,0,0.4), 0 0 50px rgba(99,102,241,.5);
+      position: relative;
+      animation: rotateGlobe 30s linear infinite;
+    }
+    .globe::after {
+      content:''; position:absolute; inset:-20px; border-radius:50%;
+      background: radial-gradient(circle, rgba(99,102,241,.25), transparent 70%);
+      filter: blur(20px); z-index:-1;
+    }
+    @keyframes rotateGlobe { from { background-position:0 0; } to { background-position:-100% 0; } }
+
+    /* Cercle vert "online" */
+    @keyframes ping-slow {
+      0% { transform: scale(1); opacity: 1; }
+      75%, 100% { transform: scale(1.5); opacity: 0; }
+    }
+    .animate-ping-slow { animation: ping-slow 1.5s cubic-bezier(0,0,0.2,1) infinite; }
+
+    .globe {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;   /* GARDE le cercle parfait */
+  border-radius: 50%;
+}
+
+.relative {
+  flex-shrink: 0; /* empêche le flex de compresser le globe */
+}
+  </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar" class="fixed w-full top-0 z-50 h-20 backdrop-blur-xl bg-slate-950/70 border-b border-white/10 transition-all duration-500">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="relative">
+        <img src="pfp.png" class="w-11 h-11 rounded-full border-2 border-cyan-400 object-cover">
+        <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border border-white rounded-full animate-ping-slow"></span>
+      </div>
+      <span class="text-2xl font-bold text-cyan-400">b9dis</span>
+      <img src="Verified.png" class="w-6 h-6">
+    </div>
+    <a href="#contact" class="px-6 py-2 rounded-full bg-cyan-500 hover:bg-cyan-400 transition font-semibold hover:scale-110">Contact</a>
+  </div>
+</nav>
+
+
+<!-- HERO -->
+<section class="min-h-screen flex items-center justify-center text-center px-6 pt-20">
+  <div class="max-w-3xl reveal">
+    <div class="mx-auto mb-8 w-44 h-44 rounded-full overflow-hidden border-4 border-indigo-500 shadow-2xl float relative">
+      <img src="pfp.png" class="w-full h-full object-cover" alt="profile">
+      <span class="absolute bottom-2 right-2 w-5 h-5 bg-green-500 border-2 border-white rounded-full animate-ping-slow"></span>
+    </div>
+
+    <h1 class="text-5xl md:text-7xl font-bold mb-6 wave">
+      <span style="--i:1">Y</span><span style="--i:2">o</span><span style="--i:3">u</span><span style="--i:4">n</span><span style="--i:5">g</span>
+      <span class="gradient-text"> Developer</span>
+    </h1>
+
+    <p class="text-gray-400 text-lg mb-10 typing" id="typing"></p>
+
+    <a href="#projects" class="inline-block px-10 py-4 rounded-full bg-indigo-600 hover:bg-indigo-500 transition text-lg">
+      View my creations
+    </a>
+
+    <div class="mt-16 text-gray-400 scroll-indicator">
+      <i class="fas fa-mouse"></i>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT ME -->
+<section id="about" class="py-40 px-6 max-w-6xl mx-auto relative">
+
+  <!-- Glow circulaire propre -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+              w-[600px] h-[600px] 
+              bg-gradient-to-r from-indigo-600/20 via-pink-500/20 to-cyan-500/20 
+              blur-[120px] rounded-full pointer-events-none">
+  </div>
+
+  <div class="glass rounded-3xl p-14 reveal relative z-10">
+    
+    <h2 class="text-4xl font-bold mb-16 text-center">
+      About <span class="gradient-text">Me</span>
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+      
+      <!-- Texte -->
+      <div class="space-y-6">
+        <p class="about-text text-gray-300 text-lg leading-relaxed opacity-0 translate-y-6">
+          Hey 👋 I'm <span class="text-cyan-400 font-semibold">b9dis</span>, 
+          passionate Roblox developer & creative builder.
+        </p>
+
+        <p class="about-text text-gray-400 leading-relaxed opacity-0 translate-y-6">
+          I create cartoon-style builds, LUAU scripting.
+        </p>
+
+        <p class="about-text text-gray-400 leading-relaxed opacity-0 translate-y-6">
+          So to introduce myself very quickly I am currently 17 years old and I will soon finish high school. After that, I plan to pursue studies to become a flight attendant, which has been a big dream of mine since I was little. Later on, I want to do everything I can to live in South Korea!
+        </p>
+
+        <p class="about-text text-gray-400 leading-relaxed opacity-0 translate-y-6">
+          My goal is simple: build immersive and polished
+          experiences that stand out.
+        </p>
+
+        <!-- Stats -->
+        <div class="flex gap-10 mt-10">
+          <div>
+            <div class="text-4xl font-bold gradient-text counter" data-target="6">0</div>
+            <div class="text-gray-400 text-sm">Years</div>
+          </div>
+          <div>
+            <div class="text-4xl font-bold gradient-text counter" data-target="15">0</div>
+            <div class="text-gray-400 text-sm">Projects</div>
+          </div>
+          <div>
+            <div class="text-4xl font-bold gradient-text">∞</div>
+            <div class="text-gray-400 text-sm">Creativity</div>
+          </div>
+        </div>
+      </div>
+
+<!-- Carte flottante avec Verified -->
+<div class="relative">
+  <div class="glass rounded-3xl p-10 text-center transform transition duration-700 hover:scale-105 float">
+    
+    <img src="pfp.png" class="w-32 h-32 mx-auto rounded-full border-4 border-indigo-500 mb-6 object-cover shadow-xl">
+
+    <div class="flex items-center justify-center gap-2 mb-2">
+      <h3 class="text-2xl font-bold text-cyan-400">b9dis</h3>
+      
+      <img src="Verified.png" class="w-6 h-6">
+    </div>
+
+    <p class="text-gray-400 text-sm">Roblox Developer • Builder • Creator</p>
+  </div>
+</div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section id="languages" class="py-40 px-6 max-w-6xl mx-auto relative">
+
+  <!-- Glow background -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+              w-[600px] h-[600px] 
+              bg-gradient-to-r from-cyan-500/20 via-indigo-500/20 to-pink-500/20 
+              blur-[120px] rounded-full pointer-events-none">
+  </div>
+
+  <div class="glass rounded-3xl p-14 reveal relative z-10">
+
+    <h2 class="text-4xl font-bold mb-16 text-center">
+      My <span class="gradient-text">Languages</span>
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-10">
+
+      <!-- English -->
+      <div class="language-card glass rounded-2xl p-8 text-center">
+        <img src="https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg" class="w-16 h-16 mx-auto mb-4" alt="UK Flag">
+        <h3 class="text-2xl font-bold text-cyan-400 mb-2">English</h3>
+        <p class="text-gray-400 mb-4">Level C1 — Certified</p>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+          <div class="progress-bar bg-gradient-to-r from-cyan-400 to-indigo-500 h-full rounded-full" data-width="85%"></div>
+        </div>
+      </div>
+
+      <!-- French -->
+      <div class="language-card glass rounded-2xl p-8 text-center">
+        <img src="https://flagcdn.com/w320/fr.png" class="w-16 h-10 mx-auto mb-4" alt="France Flag">
+        <h3 class="text-2xl font-bold text-indigo-400 mb-2">French</h3>
+        <p class="text-gray-400 mb-4">Level C2 — Spoken fluently</p>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+          <div class="progress-bar bg-gradient-to-r from-indigo-500 to-pink-500 h-full rounded-full" data-width="100%"></div>
+        </div>
+      </div>
+
+      <!-- Korean -->
+      <div class="language-card glass rounded-2xl p-8 text-center">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/09/Flag_of_South_Korea.svg" class="w-16 h-16 mx-auto mb-4" alt="Korea Flag">
+        <h3 class="text-2xl font-bold text-pink-400 mb-2">Korean</h3>
+        <p class="text-gray-400 mb-4">Level A1 — I can only present myself or talk about food</p>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+          <div class="progress-bar bg-gradient-to-r from-pink-400 to-cyan-400 h-full rounded-full" data-width="30%"></div>
+        </div>
+      </div>
+
+            <!-- Spanish -->
+      <div class="language-card glass rounded-2xl p-8 text-center">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/89/Bandera_de_Espa%C3%B1a.svg" class="w-16 h-10 mx-auto mb-4" alt="Spain Flag">
+        <h3 class="text-2xl font-bold text- text-yellow-400 mb-2">Spanish</h3>
+        <p class="text-gray-400 mb-4">Level A1 — I can only present myself, idk what i did in school btw</p>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+          <div class="progress-bar bg-gradient-to-r from-pink-400 to-cyan-400 h-full rounded-full" data-width="20%"></div>
+        </div>
+      </div>
+
+                  <!-- Soon -->
+      <div class="language-card glass rounded-2xl p-8 text-center">
+        <div class="w-16 h-10 mx-auto mb-4 bg-black rounded-md flex items-center justify-center">
+  <span class="rainbow-text text-xl font-bold">?</span>
+</div>
+        <h3 class="text-2xl font-bold text- text-white-400 mb-2">Soon</h3>
+        <p class="text-gray-400 mb-4">Level Unknow — </p>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+          <div class="progress-bar bg-gradient-to-r from-pink-400 to-cyan-400 h-full rounded-full" data-width="100%"></div>
+        </div>
+      </div>
+
+                        <!-- Soon -->
+      <div class="language-card glass rounded-2xl p-8 text-center">
+                <div class="w-16 h-10 mx-auto mb-4 bg-black rounded-md flex items-center justify-center">
+  <span class="rainbow-text text-xl font-bold">?</span>
+</div>
+        <h3 class="text-2xl font-bold text- text-white-400 mb-2">Soon</h3>
+        <p class="text-gray-400 mb-4">Level Unknow — </p>
+        <div class="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+          <div class="progress-bar bg-gradient-to-r from-pink-400 to-cyan-400 h-full rounded-full" data-width="100%"></div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS / CAROUSEL -->
+<section id="projects" class="py-40 px-6 max-w-7xl mx-auto overflow-hidden">
+  <h2 class="text-4xl font-bold text-center mb-20 reveal">
+    My <span class="gradient-text">Creations</span> (Not all)
+  </h2>
+
+  <div class="relative">
+    <button id="prev" class="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur flex items-center justify-center transition">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <button id="next" class="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-14 h-14 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur flex items-center justify-center transition">
+      <i class="fas fa-arrow-right"></i>
+    </button>
+
+    <div id="carousel" class="flex gap-10 transition-transform duration-700 ease-[cubic-bezier(.19,1,.22,1)]">
+      <div class="min-w-[340px] glass rounded-3xl overflow-hidden tilt">
+        <img src="Creation1.png" class="h-56 w-full object-cover" />
+        <div class="p-6 text-center font-semibold">Christmas 2021 Project!</div>
+      </div>
+      <div class="min-w-[340px] glass rounded-3xl overflow-hidden tilt scale-105">
+        <img src="Creation2.png" class="h-56 w-full object-cover" />
+        <div class="p-6 text-center font-semibold">Lunar New Year 2022 Project</div>
+      </div>
+      <div class="min-w-[340px] glass rounded-3xl overflow-hidden tilt">
+        <img src="Creation3.png" class="h-56 w-full object-cover" />
+        <div class="p-6 text-center font-semibold">Christmas Shop 2021 Project!</div>
+      </div>
+      <div class="min-w-[340px] glass rounded-3xl overflow-hidden tilt">
+        <img src="Creation5.png" class="h-56 w-full object-cover" />
+        <div class="p-6 text-center font-semibold">Christmas 2025 Project!</div>
+      </div>
+      <div class="min-w-[340px] glass rounded-3xl overflow-hidden tilt">
+        <img src="Creation4.png" class="h-56 w-full object-cover" />
+        <div class="p-6 text-center font-semibold">Random Build!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT / GLOBE -->
+<section id="contact" class="py-40 px-6">
+  <div class="max-w-5xl mx-auto glass rounded-3xl p-14 reveal flex flex-col md:flex-row items-center gap-16">
+    <div class="relative w-64 h-64 md:w-80 md:h-80">
+      <div class="globe"></div>
+    </div>
+
+    <div class="text-center md:text-left">
+      <h2 class="text-4xl font-bold mb-6">
+        Contact me from <span class="gradient-text">here!</span>
+      </h2>
+
+      <p class="text-gray-400 mb-10">Do it !</p>
+
+      <a href="https://discord.gg/pHvy45Z9g9" target="_blank" class="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-indigo-600 hover:bg-indigo-500 transition text-lg shadow-xl hover:scale-110">
+        <i class="fab fa-discord text-2xl"></i> My Discord Server!
+      </a>
+
+      <a href="https://x.com/b9dis" target="_blank" class="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-[#1DA1F2] hover:bg-blue-400 transition text-lg shadow-xl hover:scale-110 mt-4">
+        <i class="fab fa-twitter text-2xl text-white"></i> My Twitter
+      </a>
+
+      <a href="https://www.roblox.com/users/1367206016/profile" 
+   target="_blank"
+   class="inline-flex items-center gap-3 px-10 py-4 rounded-full 
+          bg-zinc-700 hover:bg-zinc-600
+          transition text-lg shadow-xl 
+          hover:scale-110 mt-4 font-semibold">
+
+
+  <svg xmlns="http://www.w3.org/2000/svg" 
+       viewBox="0 0 256 256" 
+       class="w-6 h-6 fill-white">
+    <path d="M45 0L0 211l211 45 45-211L45 0zm83 153l-50-11 11-50 50 11-11 50z"/>
+  </svg>
+
+  My Roblox Profile
+</a>
+
+    </div>
+  </div>
+</section>
+
+<footer class="py-10 text-center text-gray-500">© 2026 badis.axonedev All rights reserved</footer>
+
+
+
+<script>
+  /* ===== Particles ===== */
+  particlesJS('particles-js',{
+    particles:{number:{value:100},opacity:{value:.15},size:{value:3},line_linked:{enable:true,opacity:.1},move:{speed:2}},
+    interactivity:{events:{onhover:{enable:true,mode:'grab'}}}
+  });
+
+  /* ===== Reveal on scroll ===== */
+  const reveals=document.querySelectorAll('.reveal');
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>e.isIntersecting && e.target.classList.add('active'));
+  },{threshold:.2});
+  reveals.forEach(r=>io.observe(r));
+
+/* Text reveal */
+const aboutTexts = document.querySelectorAll('.about-text');
+
+const aboutObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      aboutTexts.forEach((el, i) => {
+        setTimeout(() => {
+          el.style.transition = "all 0.8s ease";
+          el.style.opacity = "1";
+          el.style.transform = "translateY(0)";
+        }, i * 200);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+
+aboutObserver.observe(document.querySelector('#about'));
+
+
+/* Counter */
+const counters = document.querySelectorAll('.counter');
+
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      counters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        let count = 0;
+        const increment = target / 60;
+
+        const update = () => {
+          if (count < target) {
+            count += increment;
+            counter.textContent = Math.floor(count);
+            requestAnimationFrame(update);
+          } else {
+            counter.textContent = target + "+";
+          }
+        };
+
+        update();
+      });
+    }
+  });
+}, { threshold: 0.5 });
+
+counterObserver.observe(document.querySelector('#about'));
+
+/* ===== Languages animation ===== */
+
+const languageCards = document.querySelectorAll('.language-card');
+const progressBars = document.querySelectorAll('.progress-bar');
+
+const languageObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+
+      languageCards.forEach((card, i) => {
+        setTimeout(() => {
+          card.classList.add('show');
+        }, i * 200);
+      });
+
+      progressBars.forEach(bar => {
+        const width = bar.getAttribute('data-width');
+        bar.style.width = width;
+      });
+
+    }
+  });
+}, { threshold: 0.3 });
+
+languageObserver.observe(document.querySelector('#languages'));
+
+/* ===== Typing effect loop ===== */
+const text = "Roblox developer • Pro Cartoon Builder • 3D Modeler • L'UAU Coder • Passion";
+const el = document.getElementById('typing');
+
+let i = 0;
+let isDeleting = false;
+
+function typeLoop() {
+  if (!isDeleting) {
+    // Typing
+    if (i < text.length) {
+      el.textContent += text.charAt(i);
+      i++;
+      setTimeout(typeLoop, 45);
+    } else {
+      // Attendre 5 secondes avant d'effacer
+      setTimeout(() => isDeleting = true, 5000);
+      setTimeout(typeLoop, 5000);
+    }
+  } else {
+    // Deleting
+    if (i > 0) {
+      el.textContent = text.substring(0, i - 1);
+      i--;
+      setTimeout(typeLoop, 30);
+    } else {
+      // Attendre 0.5 seconde avant de retaper
+      isDeleting = false;
+      setTimeout(typeLoop, 500);
+    }
+  }
+}
+
+// Démarre après 1.2 secondes
+setTimeout(typeLoop, 1200);
+
+  /* ===== Navbar scroll effect ===== */
+  const navbar = document.getElementById("navbar");
+  window.addEventListener("scroll", () => {
+    if(window.scrollY > 50){ navbar.classList.add("bg-gray-900/90","shadow-xl"); }
+    else { navbar.classList.remove("bg-gray-900/90","shadow-xl"); }
+  });
+
+  /* ===== Carousel ===== */
+  const track = document.getElementById('carousel');
+  const prev = document.getElementById('prev');
+  const next = document.getElementById('next');
+  const cards = Array.from(track.children);
+  const cardWidth = 380;
+  const maxIndex = cards.length - 1;
+  let index = 0;
+  function move(){ track.style.transition='transform 1s cubic-bezier(.16,1,.3,1)'; track.style.transform=`translateX(${-index * cardWidth}px)`; }
+  next.onclick = ()=>{ if(index<maxIndex){ index++; move(); } else { track.style.transition='transform 1.2s cubic-bezier(.4,0,.2,1)'; track.style.transform=`translateX(${cardWidth}px)`; setTimeout(()=>{ track.style.transition='none'; index=0; track.style.transform='translateX(0)'; },1200); }};
+  prev.onclick = ()=>{ if(index>0){ index--; move(); } };
+</script>
+
+</body>
+</html>
